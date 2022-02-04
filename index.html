@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <h1>Menu</h1>
     <section></section>
 
     <template>
@@ -14,21 +15,19 @@
         <img src="" alt="" />
         <h2 class="navn"></h2>
         <p class="kategori"></p>
+        <p class="kortbeskrivelse"></p>
+        <p class="pris"></p>
       </article>
     </template>
     <style>
       section {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 5px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
       }
 
       img {
         max-width: 100%;
-      }
-
-      article {
-        border: 10px;
       }
     </style>
 
@@ -54,11 +53,14 @@
 
       function vis(json) {
         console.log(json);
-        json.forEach((person) => {
+        json.forEach((mad) => {
           const klon = temp.cloneNode(true).content;
-          klon.querySelector(".navn").textContent = person.navn;
-          klon.querySelector(".kategori").textContent = person.kategori;
-          klon.querySelector("img").src = "billeder/" + person.billede;
+          klon.querySelector(".navn").textContent = mad.navn;
+          //klon.querySelector(".kategori").textContent = mad.kategori;
+          klon.querySelector(".kortbeskrivelse").textContent =
+            mad.kortbeskrivelse;
+          klon.querySelector(".pris").textContent = mad.pris + " kr.";
+          klon.querySelector("img").src = "billeder/" + mad.billednavn + ".jpg";
           container.appendChild(klon);
         });
       }
