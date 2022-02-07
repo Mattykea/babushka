@@ -60,7 +60,8 @@
           klon.querySelector(".kortbeskrivelse").textContent =
             mad.kortbeskrivelse;
           klon.querySelector(".pris").textContent = mad.pris + " kr.";
-          klon.querySelector("img").src = "billeder/" + mad.billednavn + ".jpg";
+          klon.querySelector("img").src =
+            "billeder/" + mad.billednavn + "-md.jpg";
           container.appendChild(klon);
         });
       }

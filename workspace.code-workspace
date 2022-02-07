@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"name": "babushka",
+		"path": "."
+	},
+	{
+		"name": "medium",
+		"path": "..\\..\\..\\..\\..\\..\\Downloads\\images\\medium"
+	}
+],
+  "settings": {
+    "liveServer.settings.port": 5502,
+    "liveServer.settings.multiRootWorkspaceName": "babushka"
+  }
+}
