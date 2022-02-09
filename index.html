@@ -4,11 +4,37 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&family=Quintessential&display=swap"
+      rel="stylesheet"
+    />
+    <title>Babushka</title>
   </head>
   <body>
+    <header>Bistro Babushka</header>
+    <nav>
+      <button data-kategorier="alle" class="valgt">Alle</button>
+      <button data-kategori="forretter">Forretter</button>
+      <button data-kategorier="hovedretter">Hovedretter</button>
+      <button data-kategorier="desserter">Desserter</button>
+      <button data-kategorier="sideorders">Sideorders</button>
+      <button data-kategorier="drikkevarer">Drikkevarer</button>
+    </nav>
     <h1>Menu</h1>
     <section></section>
+
+    <aside id="modal">
+      <article>
+        <img src="" alt="" />
+        <h2 class="navn"></h2>
+        <p class="pris"></p>
+        <p class="kategori"></p>
+        <p class="langbeskrivelse"></p>
+        <p class="oprindelsesregion"></p>
+      </article>
+    </aside>
 
     <template>
       <article>
@@ -19,7 +45,78 @@
         <p class="pris"></p>
       </article>
     </template>
+
+    <footer>
+      <div class="adresse">
+        <p>Adresse:</p>
+        <p>Grønnegade 97</p>
+        <p>1234 København K</p>
+      </div>
+
+      <div class="tid">
+        <p>Åbningstider:</p>
+        <p>Mandag - Fredag: 10.30 - 22.00</p>
+        <p>Lørdag: 12.00 - 23.00</p>
+      </div>
+    </footer>
+
     <style>
+      h1,
+      h2,
+      header {
+        font-family: "Quintessential", cursive;
+      }
+
+      header {
+        font-size: 5rem;
+        text-align: center;
+        border-radius: 50px;
+        background-color: rgb(221, 57, 57);
+        color: rgb(224, 224, 224);
+        border: 5px solid brown;
+      }
+
+      h1 {
+        color: rgb(224, 224, 224);
+      }
+
+      button,
+      p {
+        font-family: "Prompt", sans-serif;
+      }
+
+      body {
+        margin-inline: 8%;
+        background-color: rgb(0, 50, 100);
+      }
+
+      article {
+        /*border: 1px solid black;*/
+        background-color: rgb(224, 224, 224);
+        padding: 3%;
+        margin: 1.5%;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      #modal {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        background-color: rgba(68, 0, 88, 0.342);
+        top: 0;
+        left: 0;
+      }
+
+      #modal article {
+        padding: 1.2%;
+        max-width: 75%;
+        margin-block: 10%;
+        margin-inline: auto;
+        background-color: rgb(255, 245, 227);
+      }
+
       section {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -28,6 +125,52 @@
 
       img {
         max-width: 100%;
+      }
+
+      /*KNAPPER*/
+      nav {
+        margin-block-start: 1%;
+        text-align: center;
+      }
+
+      button {
+        font-size: 1rem;
+        background-color: brown;
+        margin: 0.1%;
+        margin-top: 2%;
+        color: white;
+        border: 3px solid brown;
+        padding: 1%;
+        padding-block: 0.5%;
+        cursor: pointer;
+        border-radius: 10px;
+        transition-duration: 0.3s;
+      }
+
+      button:hover {
+        border: 3px solid brown;
+        background-color: rgb(226, 226, 226);
+        color: brown;
+      }
+
+      @media (min-width: 700px) {
+        #modal article {
+          max-width: 40%;
+          margin-block: 20px;
+        }
+
+        header {
+          font-size: 9rem;
+        }
+      }
+
+      footer {
+        color: rgb(226, 226, 226);
+        display: flex;
+        gap: 5%;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        justify-content: space-evenly;
+        margin-top: 5%;
       }
     </style>
 
@@ -55,6 +198,7 @@
         console.log(json);
         json.forEach((mad) => {
           const klon = temp.cloneNode(true).content;
+
           klon.querySelector(".navn").textContent = mad.navn;
           //klon.querySelector(".kategori").textContent = mad.kategori;
           klon.querySelector(".kortbeskrivelse").textContent =
@@ -62,9 +206,32 @@
           klon.querySelector(".pris").textContent = mad.pris + " kr.";
           klon.querySelector("img").src =
             "billeder/" + mad.billednavn + "-md.jpg";
+
+          klon
+            .querySelector("article")
+            .addEventListener("click", () => visDetaljer(mad));
+
           container.appendChild(klon);
         });
       }
+
+      //SINGLE VIEW
+      function visDetaljer(mad) {
+        console.log("visDetaljer, mad");
+
+        modal.querySelector("h2").textContent = mad.navn;
+        modal.querySelector(".langbeskrivelse").textContent =
+          mad.langbeskrivelse;
+        modal.querySelector(".oprindelsesregion").textContent =
+          "Oprindelsesregion: " + mad.oprindelsesregion;
+        modal.querySelector(".pris").textContent = mad.pris + " kr.";
+        modal.querySelector("img").src =
+          "billeder/" + mad.billednavn + "-md.jpg";
+
+        modal.style.display = "block";
+      }
+
+      modal.addEventListener("click", () => (modal.style.display = "none"));
 
       hentData();
     </script>
